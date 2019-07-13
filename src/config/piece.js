@@ -12,20 +12,22 @@ const config = {
     ROOK   : 'R',
     PAWN   : 'p',
 
-
-    WHITE_KING   : this.WHITE + this.KING,
-    WHITE_QUEEN  : this.WHITE + this.QUEEN,
-    WHITE_BISHOP : this.WHITE + this.BISHOP,
-    WHITE_KNIGHT : this.WHITE + this.KNIGHT,
-    WHITE_ROOK   : this.WHITE + this.ROOK,
-    WHITE_PAWN   : this.WHITE + this.PAWN,
-
-    BLACK_KING   : this.BLACK + this.KING,
-    BLACK_QUEEN  : this.BLACK + this.QUEEN,
-    BLACK_BISHOP : this.BLACK + this.BISHOP,
-    BLACK_KNIGHT : this.BLACK + this.KNIGHT,
-    BLACK_ROOK   : this.BLACK + this.ROOK,
-    BLACK_PAWN   : this.BLACK + this.PAWN,
 };
+
+// White pieces
+config.WHITE_KING   = config.WHITE + config.KING;
+config.WHITE_QUEEN  = config.WHITE + config.QUEEN;
+config.WHITE_BISHOP = config.WHITE + config.BISHOP;
+config.WHITE_KNIGHT = config.WHITE + config.KNIGHT;
+config.WHITE_ROOK   = config.WHITE + config.ROOK;
+config.WHITE_PAWN   = config.WHITE + config.PAWN;
+
+// Black pieces
+config.BLACK_KING   = config.BLACK + config.KING;
+config.BLACK_QUEEN  = config.BLACK + config.QUEEN;
+config.BLACK_BISHOP = config.BLACK + config.BISHOP;
+config.BLACK_KNIGHT = config.BLACK + config.KNIGHT;
+config.BLACK_ROOK   = config.BLACK + config.ROOK;
+config.BLACK_PAWN   = config.BLACK + config.PAWN;
 
 export default config;
