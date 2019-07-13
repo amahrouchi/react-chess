@@ -16,8 +16,7 @@ class Board extends React.Component {
         super(props);
 
         this.state = {
-            chessBoard     : new ChessBoard(),
-            selectedCoords : null,
+            chessBoard : new ChessBoard(),
         };
     }
 
@@ -44,15 +43,11 @@ class Board extends React.Component {
             let line = [];
             for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
 
-                const isWhite    = (x % 2 === 0 && y % 2 === 0) || (x % 2 !== 0 && y % 2 !== 0);
-                const isSelected = this.state.selectedCoords !== null
-                    && this.state.selectedCoords.x === x
-                    && this.state.selectedCoords.y === y;
+                const isWhite = (x % 2 === 0 && y % 2 === 0) || (x % 2 !== 0 && y % 2 !== 0);
 
                 const key = '' + y + x;
                 line.push(
                     <Square isWhite={isWhite}
-                            isSelected={isSelected}
                             chessBoard={this.state.chessBoard}
                             x={x}
                             y={y}
@@ -76,39 +71,28 @@ class Board extends React.Component {
 
     /**
      * Click on a square
-     * @param x
-     * @param y
+     * @param {int} x
+     * @param {int} y
      * @return {void}
      */
     clickSquare(x, y) {
+        const matrix         = this.state.chessBoard.getMatrix().slice();
+        const selectedCoords = this.state.chessBoard.getSelectedCoords();
+        const chessBoard     = new ChessBoard(matrix, selectedCoords);
 
         // Select a piece to move
         if (
-            this.state.selectedCoords === null
-            && this.state.chessBoard.hasPiece(x, y)
+            !chessBoard.hasSelectedCoords()
+            && chessBoard.hasPiece(x, y)
         ) {
-            this.setState({
-                selectedCoords : {
-                    x : x,
-                    y : y
-                },
-            });
-
+            chessBoard.selectCoords(x, y);
+            this.setState({chessBoard : chessBoard});
         }
         // Move the piece to its new location
-        else if (this.state.selectedCoords !== null) {
-            const matrix     = this.state.chessBoard.getMatrix();
-            const chessBoard = new ChessBoard(matrix);
-
-            chessBoard.move(
-                {x : this.state.selectedCoords.x, y : this.state.selectedCoords.y},
-                {x : x, y : y}
-            );
-
-            this.setState({
-                chessBoard     : chessBoard,
-                selectedCoords : null,
-            });
+        else if (chessBoard.hasSelectedCoords()) {
+            chessBoard.moveSelectedTo(x, y);
+            chessBoard.unselectCoords();
+            this.setState({chessBoard : chessBoard});
         }
     }
 

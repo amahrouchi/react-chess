@@ -13,15 +13,15 @@ class Square extends React.Component {
     render() {
         // Square style
         const colorClass    = this.props.isWhite ? ' white' : ' black';
-        const selectedClass = this.props.isSelected ? ' selected' : '';
+        const selectedClass = this.props.chessBoard.isSelected(this.props.x, this.props.y) ? ' selected' : '';
         const className     = 'square' + colorClass + selectedClass;
 
         // Piece on the square
         const hasPiece = this.props.chessBoard.hasPiece(this.props.x, this.props.y);
-        const pieceId = hasPiece ? this.props.chessBoard.getPiece(this.props.x, this.props.y) : null;
-        const piece   = hasPiece
-                        ? <Piece type={pieceId}/>
-                        : '';
+        const pieceId  = hasPiece ? this.props.chessBoard.getPieceId(this.props.x, this.props.y) : null;
+        const piece    = hasPiece
+                         ? <Piece type={pieceId}/>
+                         : '';
 
         return (
             <div className={className}

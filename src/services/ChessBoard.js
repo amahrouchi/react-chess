@@ -8,11 +8,18 @@ class ChessBoard {
     /**
      * Constructor
      */
-    constructor(matrix) {
+    constructor(matrix, selectedCoords) {
+        // Init matrix
         if (typeof matrix !== 'undefined') {
             this.matrix = matrix;
         } else {
             this.matrix = this.initMatrix();
+        }
+
+        // Init selected coordinates
+        this.selectedCoords = null;
+        if (typeof selectedCoords !== 'undefined') {
+            this.selectedCoords = selectedCoords;
         }
     }
 
@@ -43,13 +50,18 @@ class ChessBoard {
 
     /**
      * Moves a piece
-     * @param {object} from
-     * @param {object} to
+     * @param {int} x
+     * @param {int} y
+     * @return {void}
      */
-    move(from, to) {
-        const piece                 = this.matrix[from.y][from.x];
-        this.matrix[from.y][from.x] = null;
-        this.matrix[to.y][to.x]     = piece;
+    moveSelectedTo(x, y) {
+        if (!this.hasSelectedCoords()) {
+            return;
+        }
+
+        const piece                                               = this.matrix[this.selectedCoords.y][this.selectedCoords.x];
+        this.matrix[this.selectedCoords.y][this.selectedCoords.x] = null;
+        this.matrix[y][x]                                         = piece;
     }
 
     /**
@@ -58,7 +70,7 @@ class ChessBoard {
      * @param {int} y
      * @return {string}
      */
-    getPiece(x, y) {
+    getPieceId(x, y) {
         return this.matrix[y][x];
     }
 
@@ -70,6 +82,52 @@ class ChessBoard {
      */
     hasPiece(x, y) {
         return this.matrix[y][x] !== null;
+    }
+
+    /**
+     * Gets the selected coords
+     * @return {object}
+     */
+    getSelectedCoords() {
+        return this.selectedCoords;
+    }
+
+    /**
+     * Whether the board has selected coords
+     * @return {boolean}
+     */
+    hasSelectedCoords() {
+        return this.selectedCoords !== null;
+    }
+
+    /**
+     * Checks if a position is selected
+     * @param {int} x
+     * @param {int} y
+     * @return {boolean}
+     */
+    isSelected(x, y) {
+        return this.hasSelectedCoords()
+            && this.selectedCoords.x === x
+            && this.selectedCoords.y === y
+    }
+
+    /**
+     * Selected coordinates
+     * @param {int} x
+     * @param {int} y
+     * @return {void}
+     */
+    selectCoords(x, y) {
+        this.selectedCoords = {x : x, y : y};
+    }
+
+    /**
+     * Reset selected coords
+     * @return {void}
+     */
+    unselectCoords() {
+        this.selectedCoords = null;
     }
 }
 
