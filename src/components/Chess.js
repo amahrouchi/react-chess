@@ -1,4 +1,4 @@
-import React    from 'react';
+import React from 'react';
 
 /**
  * Chess app main component
@@ -10,7 +10,7 @@ class Chess extends React.Component {
      */
     render() {
         return (
-            <div>Here comes the chess!</div>
+            <div className="chess">Here comes the chess!</div>
         );
     }
 }
