@@ -78,9 +78,11 @@ class Board extends React.Component {
      * Click on a square
      * @param x
      * @param y
+     * @return {void}
      */
     clickSquare(x, y) {
 
+        // Select a piece to move
         if (
             this.state.selectedCoords === null
             && this.state.chessBoard.hasPiece(x, y)
@@ -90,12 +92,24 @@ class Board extends React.Component {
                     x : x,
                     y : y
                 },
-            })
+            });
+
         }
+        // Move the piece to its new location
+        else if (this.state.selectedCoords !== null) {
+            const matrix     = this.state.chessBoard.getMatrix();
+            const chessBoard = new ChessBoard(matrix);
 
-        // const matrix     = this.state.chessBoard.getMatrix();
-        // const chessBoard = new ChessBoard(matrix);
+            chessBoard.move(
+                {x : this.state.selectedCoords.x, y : this.state.selectedCoords.y},
+                {x : x, y : y}
+            );
 
+            this.setState({
+                chessBoard     : chessBoard,
+                selectedCoords : null,
+            });
+        }
     }
 
 }
