@@ -5,6 +5,10 @@ import React from "react";
  */
 class Piece extends React.Component
 {
+    /**
+     * Constructor
+     * @param props
+     */
     constructor(props) {
         super(props);
 
@@ -17,6 +21,10 @@ class Piece extends React.Component
         };
     }
 
+    /**
+     * Renders the component
+     * @return {*}
+     */
     render() {
         return (
             <img src={this.getPath()}
@@ -26,6 +34,10 @@ class Piece extends React.Component
         );
     }
 
+    /**
+     * Gets the piece image file path
+     * @return {string}
+     */
     getPath() {
         return this.piecePath + this.state.type + '.svg';
     }
