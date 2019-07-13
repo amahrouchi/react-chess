@@ -23,7 +23,12 @@ class Square extends React.Component {
         const className = 'square ' + colorClass;
 
         return (
-            <div className={className}></div>
+            <div className={className}>
+                <img src="/assets/pieces/bQ.svg"
+                     alt="Black Queen"
+                    className="piece"
+                />
+            </div>
         );
     }
 }

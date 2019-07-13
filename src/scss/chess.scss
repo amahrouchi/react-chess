@@ -11,7 +11,7 @@ body {
 .chess {
     $squareSize : 50px;
 
-    margin-top: 70px;
+    margin-top : 70px;
 
     .board {
         .line {
@@ -19,15 +19,22 @@ body {
             justify-content : center;
 
             .square {
-                width  : $squareSize;
-                height : $squareSize;
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                width           : $squareSize;
+                height          : $squareSize;
 
                 &.white {
                     background-color : #FFF;
                 }
 
                 &.black {
-                    background-color : #000;
+                    background-color : #5b5e84;
+                }
+
+                .piece {
+                    // TODO
                 }
             }
         }
