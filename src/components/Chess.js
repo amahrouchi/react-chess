@@ -1,4 +1,5 @@
 import React from 'react';
+import Board from "./Board";
 
 /**
  * Chess app main component
@@ -10,7 +11,9 @@ class Chess extends React.Component {
      */
     render() {
         return (
-            <div className="chess">Here comes the chess!</div>
+            <div className="chess">
+                <Board />
+            </div>
         );
     }
 }
