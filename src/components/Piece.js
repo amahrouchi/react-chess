@@ -1,26 +1,11 @@
 import React from "react";
+import mainConfig from "../config/main";
 
 /**
  * Piece component
  */
 class Piece extends React.Component
 {
-    /**
-     * Constructor
-     * @param props
-     */
-    constructor(props) {
-        super(props);
-
-        // Piece folder path
-        this.piecePath = '/assets/pieces/';
-
-        // Set the current type of the piece
-        this.state = {
-            type : props.type
-        };
-    }
-
     /**
      * Renders the component
      * @return {*}
@@ -39,7 +24,7 @@ class Piece extends React.Component
      * @return {string}
      */
     getPath() {
-        return this.piecePath + this.state.type + '.svg';
+        return mainConfig.PIECE_PATH + this.props.type + '.svg';
     }
 }
 

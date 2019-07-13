@@ -1,10 +1,24 @@
-import React  from 'react';
-import Square from "./Square";
+import React      from 'react';
+import Square     from "./Square";
+import ChessBoard from "../services/ChessBoard";
+import mainConfig from '../config/main';
 
 /**
  * The chess board component
  */
 class Board extends React.Component {
+
+    /**
+     * Constructor
+     * @param props
+     */
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            chessBoard : new ChessBoard(),
+        }
+    }
 
     /**
      * Renders the component
@@ -23,19 +37,20 @@ class Board extends React.Component {
      * @return {Array}
      */
     buildBoard() {
-        const boardSize = 8;
-
         let board = [];
-        for (let i = 0; i < boardSize; i++) {
+        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
 
             let line = [];
-            for (let j = 0; j < boardSize; j++) {
+            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
 
-                const isWhite = (j % 2 === 0 && i % 2 === 0) || (j % 2 !== 0 && i % 2 !== 0);
+                const isWhite = (x % 2 === 0 && y % 2 === 0) || (x % 2 !== 0 && y % 2 !== 0);
 
-                const key = '' + i + j;
+                const key = '' + y + x;
                 line.push(
                     <Square isWhite={isWhite}
+                            chessBoard={this.state.chessBoard}
+                            x={x}
+                            y={y}
                             key={key}
                     />
                 );
@@ -43,7 +58,7 @@ class Board extends React.Component {
 
             board.push(
                 <div className="line"
-                     key={i}
+                     key={y}
                 >
                     {line}
                 </div>
