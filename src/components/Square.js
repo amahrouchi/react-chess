@@ -1,4 +1,5 @@
 import React from "react";
+import Piece from "./Piece";
 
 /**
  * The Square component
@@ -24,10 +25,7 @@ class Square extends React.Component {
 
         return (
             <div className={className}>
-                <img src="/assets/pieces/bQ.svg"
-                     alt="Black Queen"
-                    className="piece"
-                />
+                <Piece type="bK"/>
             </div>
         );
     }
