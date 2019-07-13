@@ -8,8 +8,12 @@ class ChessBoard {
     /**
      * Constructor
      */
-    constructor() {
-        this.matrix = this.initMatrix();
+    constructor(matrix) {
+        if (typeof matrix !== 'undefined') {
+            this.matrix = matrix;
+        } else {
+            this.matrix = this.initMatrix();
+        }
     }
 
     /**
@@ -35,6 +39,37 @@ class ChessBoard {
             Array(8).fill(pieceConfig.WHITE_PAWN),
             [pieceConfig.WHITE_ROOK, pieceConfig.WHITE_KNIGHT, pieceConfig.WHITE_BISHOP, pieceConfig.WHITE_QUEEN, pieceConfig.WHITE_KING, pieceConfig.WHITE_BISHOP, pieceConfig.WHITE_KNIGHT, pieceConfig.WHITE_ROOK],
         ];
+    }
+
+    /**
+     * Moves a piece
+     * @param {object} from
+     * @param {object} to
+     */
+    move(from, to) {
+        const piece                 = this.matrix[from.y][from.x];
+        this.matrix[from.y][from.x] = null;
+        this.matrix[to.y][to.x]     = piece;
+    }
+
+    /**
+     * Returns the square piece
+     * @param {int} x
+     * @param {int} y
+     * @return {string}
+     */
+    getPiece(x, y) {
+        return this.matrix[y][x];
+    }
+
+    /**
+     * Whether a square is occupied by a piece
+     * @param {int} x
+     * @param {int} y
+     * @return {boolean}
+     */
+    hasPiece(x, y) {
+        return this.matrix[y][x] !== null;
     }
 }
 

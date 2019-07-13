@@ -12,17 +12,21 @@ class Square extends React.Component {
      */
     render() {
         // Square style
-        const colorClass = this.props.isWhite ? 'white' : 'black';
-        const className  = 'square ' + colorClass;
+        const colorClass    = this.props.isWhite ? ' white' : ' black';
+        const selectedClass = this.props.isSelected ? ' selected' : '';
+        const className     = 'square' + colorClass + selectedClass;
 
         // Piece on the square
-        const pieceId = this.props.chessBoard.getMatrix()[this.props.y][this.props.x];
-        const piece = pieceId !== null
-            ? <Piece type={pieceId}/>
-            : '';
+        const hasPiece = this.props.chessBoard.hasPiece(this.props.x, this.props.y);
+        const pieceId = hasPiece ? this.props.chessBoard.getPiece(this.props.x, this.props.y) : null;
+        const piece   = hasPiece
+                        ? <Piece type={pieceId}/>
+                        : '';
 
         return (
-            <div className={className}>
+            <div className={className}
+                 onClick={() => this.props.onClick(this.props.x, this.props.y)}
+            >
                 {piece}
             </div>
         );

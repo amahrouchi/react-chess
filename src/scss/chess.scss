@@ -33,6 +33,10 @@ body {
                     background-color : #5b5e84;
                 }
 
+                &.selected {
+                    background-color : #d28a83;
+                }
+
                 .piece {
                     cursor : pointer;
                 }

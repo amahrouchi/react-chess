@@ -16,8 +16,9 @@ class Board extends React.Component {
         super(props);
 
         this.state = {
-            chessBoard : new ChessBoard(),
-        }
+            chessBoard     : new ChessBoard(),
+            selectedCoords : null,
+        };
     }
 
     /**
@@ -43,14 +44,19 @@ class Board extends React.Component {
             let line = [];
             for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
 
-                const isWhite = (x % 2 === 0 && y % 2 === 0) || (x % 2 !== 0 && y % 2 !== 0);
+                const isWhite    = (x % 2 === 0 && y % 2 === 0) || (x % 2 !== 0 && y % 2 !== 0);
+                const isSelected = this.state.selectedCoords !== null
+                    && this.state.selectedCoords.x === x
+                    && this.state.selectedCoords.y === y;
 
                 const key = '' + y + x;
                 line.push(
                     <Square isWhite={isWhite}
+                            isSelected={isSelected}
                             chessBoard={this.state.chessBoard}
                             x={x}
                             y={y}
+                            onClick={this.clickSquare.bind(this)}
                             key={key}
                     />
                 );
@@ -66,6 +72,30 @@ class Board extends React.Component {
         }
 
         return board;
+    }
+
+    /**
+     * Click on a square
+     * @param x
+     * @param y
+     */
+    clickSquare(x, y) {
+
+        if (
+            this.state.selectedCoords === null
+            && this.state.chessBoard.hasPiece(x, y)
+        ) {
+            this.setState({
+                selectedCoords : {
+                    x : x,
+                    y : y
+                },
+            })
+        }
+
+        // const matrix     = this.state.chessBoard.getMatrix();
+        // const chessBoard = new ChessBoard(matrix);
+
     }
 
 }
