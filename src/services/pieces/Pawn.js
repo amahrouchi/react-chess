@@ -1,17 +1,18 @@
-import pieceConfig from '../../config/piece';
+import pieceConfig   from '../../config/piece';
+import AbstractPiece from "./AbstractPiece";
 
 /**
  * Handles the behaviour of a pawn
  */
-class Pawn {
+class Pawn extends AbstractPiece{
 
     /**
      * Pawn constructor
      * @param {ChessBoard} chessBoard
+     * @param color
      */
     constructor(chessBoard, color) {
-        this.chessBoard = chessBoard;
-        this.color      = color;
+        super(chessBoard,color);
         this.hasMoved   = false;
     }
 
