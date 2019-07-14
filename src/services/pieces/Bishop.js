@@ -13,19 +13,39 @@ class Bishop extends AbstractPiece {
      */
     canMove(from, to) {
         // Check from != to
-        const differentSquares = super.canMove(from, to);
-        if (!differentSquares) {
+        if (!super.canMove(from, to)) {
             return false;
         }
 
-        // Check the basi movement
+        // Check the basic movement + path
+        const checkDirectionAndPath = Bishop.checkDirectionAndPath(from, to, this.chessBoard);
+        if (!checkDirectionAndPath) {
+            return false;
+        }
+
+        // Check if there is a piece on the targeted square
+        const targetPiece = this.chessBoard.getPiece(to.x, to.y);
+
+        return targetPiece === null || targetPiece.getColor() !== this.getColor();
+    }
+
+    /**
+     * Check the bishop basic movement (in diagonal) + the obstacle on its path
+     * @param {object} from
+     * @param {object} to
+     * @param {ChessBoard} chessBoard
+     * @return {boolean}
+     */
+    static checkDirectionAndPath(from, to, chessBoard) {
+
+        // Check the basic movement
         const basicMovement = Math.abs(from.x - to.x) === Math.abs(from.y - to.y);
         if (!basicMovement) {
             return false;
         }
 
         // Check obstacle on the path
-        const distance = Math.abs(from.x - to.x);
+        const distance   = Math.abs(from.x - to.x);
         const xIncrement = to.x > from.x ? 1 : -1;
         const yIncrement = to.y > from.y ? 1 : -1;
 
@@ -37,16 +57,13 @@ class Bishop extends AbstractPiece {
             const xCheck = from.x + i * xIncrement;
             const yCheck = from.y + i * yIncrement;
 
-            const hasPiece = this.chessBoard.hasPiece(xCheck, yCheck);
+            const hasPiece = chessBoard.hasPiece(xCheck, yCheck);
             if (hasPiece) {
                 return false;
             }
         }
 
-        // Check if there is a piece on the targeted square
-        const targetPiece = this.chessBoard.getPiece(to.x, to.y);
-
-        return targetPiece === null || targetPiece.getColor() !== this.getColor();
+        return true;
     }
 }
 

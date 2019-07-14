@@ -14,8 +14,7 @@ class Pawn extends AbstractPiece {
      */
     canMove(from, to) {
         // Check from != to
-        const differentSquares = super.canMove(from, to);
-        if (!differentSquares) {
+        if (!super.canMove(from, to)) {
             return false;
         }
 

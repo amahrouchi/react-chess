@@ -13,11 +13,30 @@ class Rook extends AbstractPiece {
      */
     canMove(from, to) {
         // Check from != to
-        const differentSquares = super.canMove(from, to);
-        if (!differentSquares) {
+        if (!super.canMove(from, to)) {
             return false;
         }
 
+        // Check the basic movement + path
+        const checkDirectionAndPath = Rook.checkDirectionAndPath(from, to, this.chessBoard);
+        if (!checkDirectionAndPath) {
+            return false;
+        }
+
+        // Check if there is a piece on the targeted square
+        const targetPiece = this.chessBoard.getPiece(to.x, to.y);
+
+        return targetPiece === null || targetPiece.getColor() !== this.getColor();
+    }
+
+    /**
+     * Check the rook basic movement (in line) + the obstacle on its path
+     * @param {object} from
+     * @param {object} to
+     * @param {ChessBoard} chessBoard
+     * @return {boolean}
+     */
+    static checkDirectionAndPath(from, to, chessBoard) {
         // Check the basic movement
         const movementLooksValid = from.x === to.x || from.y === to.y;
         if (!movementLooksValid) {
@@ -37,9 +56,9 @@ class Rook extends AbstractPiece {
 
             let hasPiece;
             if (movementType === 'y') {
-                hasPiece = this.chessBoard.hasPiece(from.x, i);
+                hasPiece = chessBoard.hasPiece(from.x, i);
             } else {
-                hasPiece = this.chessBoard.hasPiece(i, from.y);
+                hasPiece = chessBoard.hasPiece(i, from.y);
             }
 
             if (hasPiece) {
@@ -47,10 +66,7 @@ class Rook extends AbstractPiece {
             }
         }
 
-        // Check if there is a piece on the targeted square
-        const targetPiece = this.chessBoard.getPiece(to.x, to.y);
-
-        return targetPiece === null || targetPiece.getColor() !== this.getColor();
+        return true;
     }
 }
 
