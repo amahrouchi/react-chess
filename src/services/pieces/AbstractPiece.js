@@ -13,6 +13,7 @@ class AbstractPiece {
         this.chessBoard = chessBoard;
         this.type       = type;
         this.color      = color;
+        this.hasMoved   = false;
     }
 
     /**
@@ -29,6 +30,15 @@ class AbstractPiece {
      */
     getType() {
         return this.type;
+    }
+
+    /**
+     * Sets whether the piece has moved
+     * @param {boolean} hasMoved
+     * @return {void}
+     */
+    setHasMoved(hasMoved) {
+        this.hasMoved = hasMoved;
     }
 
     /**

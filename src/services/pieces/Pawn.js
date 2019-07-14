@@ -7,33 +7,6 @@ import AbstractPiece from "./AbstractPiece";
 class Pawn extends AbstractPiece {
 
     /**
-     * Pawn constructor
-     * @param {ChessBoard} chessBoard
-     * @param color
-     */
-    constructor(chessBoard, type, color) {
-        super(chessBoard, type, color);
-        this.hasMoved = false;
-    }
-
-    /**
-     * Whether the piece has moved
-     * @return {boolean}
-     */
-    getHasMoved() {
-        return this.hasMoved;
-    }
-
-    /**
-     * Sets whether the piece has moved
-     * @param {boolean} hasMoved
-     * @return {void}
-     */
-    setHasMoved(hasMoved) {
-        this.hasMoved = hasMoved;
-    }
-
-    /**
      * Whether the pawn can move from a location to another
      * @param {object} from {x : x, y : y}
      * @param {object} to {x : x, y : y}
