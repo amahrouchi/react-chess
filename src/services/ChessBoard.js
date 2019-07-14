@@ -7,8 +7,11 @@ class ChessBoard {
 
     /**
      * Constructor
+     * @param {Array} matrix The matrix representing the board state
+     * @param {object} selectedCoords {x : <value>, y : <value>}
+     * @param {string} player Current player ('w' or 'b')
      */
-    constructor(matrix, selectedCoords) {
+    constructor(matrix, selectedCoords, player) {
         // Init matrix
         if (typeof matrix !== 'undefined') {
             this.matrix = matrix;
@@ -20,6 +23,11 @@ class ChessBoard {
         this.selectedCoords = null;
         if (typeof selectedCoords !== 'undefined') {
             this.selectedCoords = selectedCoords;
+        }
+
+        this.player = pieceConfig.WHITE;
+        if (typeof player !== 'undefined') {
+            this.player = player;
         }
     }
 
@@ -128,6 +136,22 @@ class ChessBoard {
      */
     unselectCoords() {
         this.selectedCoords = null;
+    }
+
+    /**
+     * Gets the current player
+     * @return {string|string}
+     */
+    getPlayer() {
+        return this.player;
+    }
+
+    /**
+     * Changes the current player
+     * @return {void}
+     */
+    changePlayer() {
+        this.player = this.player === pieceConfig.BLACK ? pieceConfig.WHITE : pieceConfig.BLACK;
     }
 }
 
