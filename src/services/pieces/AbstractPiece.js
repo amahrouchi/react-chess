@@ -1,6 +1,8 @@
 /**
  * Handles the behaviour of a chess piece
  */
+import mainConfig from "../../config/main";
+
 class AbstractPiece {
 
     /**
@@ -8,11 +10,13 @@ class AbstractPiece {
      * @param {ChessBoard} chessBoard
      * @param {string} type
      * @param {string} color
+     * @param {object} coords {x : [value], y : [value]}
      */
-    constructor(chessBoard, type, color) {
+    constructor(chessBoard, type, color, coords) {
         this.chessBoard = chessBoard;
         this.type       = type;
         this.color      = color;
+        this.coords     = coords;
         this.hasMoved   = false;
     }
 
@@ -51,6 +55,18 @@ class AbstractPiece {
     }
 
     /**
+     * Sets the piece coords
+     * @param {int} x
+     * @param {int} y
+     */
+    setCoords(x, y) {
+        this.coords = {
+            x : x,
+            y : y,
+        };
+    }
+
+    /**
      * Whether the piece can move from a location to another
      * @param {object} from {x : x, y : y}
      * @param {object} to {x : x, y : y}
@@ -58,6 +74,38 @@ class AbstractPiece {
      */
     canMove(from, to) {
         return from.x !== to.x || from.y !== to.y;
+    }
+
+    /**
+     * Whether the current piece is attacked
+     * @return {boolean}
+     */
+    isAttacked() {
+
+        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
+            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
+                // Get the current piece
+                const piece = this.chessBoard.getPiece(x, y);
+                if (
+                    piece === null
+                    || piece.getColor() === this.getColor()
+                ) {
+                    continue;
+                }
+
+                const attacking = piece.canMove(
+                    {x : x, y : y},
+                    {x : this.coords.x, y : this.coords.y}
+                );
+
+                if (attacking) {
+                    console.log(piece);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
 

@@ -59,12 +59,12 @@ class ChessBoard {
     initMatrix() {
         const initialMatrix = mainConfig.INITIAL_MATRIX;
 
-        this.matrix = [[],[],[],[],[],[],[],[]];
+        this.matrix = [[], [], [], [], [], [], [], []];
         for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
             for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
                 const pieceId     = initialMatrix[y][x];
                 this.matrix[y][x] = pieceId !== null
-                                    ? PieceFactory.create(pieceId, this)
+                                    ? PieceFactory.create(pieceId, {x : x, y : y}, this)
                                     : null;
             }
         }
@@ -85,6 +85,7 @@ class ChessBoard {
         this.matrix[this.selectedCoords.y][this.selectedCoords.x] = null;
         this.matrix[y][x]                                         = piece;
         piece.setHasMoved(true);
+        piece.setCoords(x, y);
         this.lastPieceMoved = piece;
     }
 
