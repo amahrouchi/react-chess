@@ -12,10 +12,41 @@ class Rook extends AbstractPiece {
      * @return {boolean}
      */
     canMove(from, to) {
-        return from.x === to.x || from.y === to.y;
+
+        // Check the basic movement
+        const movementLooksValid = from.x === to.x || from.y === to.y;
+        if (!movementLooksValid) {
+            return false;
+        }
+
+        // Check obstacle on the path
+        const movementType = from.x === to.x ? 'y' : 'x';
+        const pathMap      = [to[movementType], from[movementType]];
+        pathMap.sort();
+
+        for (
+            let i = pathMap[0] + 1;
+            i <= pathMap[1] - 1;
+            i++
+        ) {
+
+            let hasPiece;
+            if (movementType === 'y') {
+                hasPiece = this.chessBoard.hasPiece(from.x, i);
+            } else {
+                hasPiece = this.chessBoard.hasPiece(i, from.y);
+            }
+
+            if (hasPiece) {
+                return false;
+            }
+        }
+
+        // Check if there is a piece on the targeted square
+        const targetPiece = this.chessBoard.getPiece(to.x, to.y);
+
+        return targetPiece === null || targetPiece.getColor() !== this.getColor();
     }
-
-
 }
 
 export default Rook;
