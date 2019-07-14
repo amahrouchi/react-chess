@@ -57,7 +57,7 @@ class AbstractPiece {
      * @return {boolean}
      */
     canMove(from, to) {
-        return true;
+        return from.x !== to.x || from.y !== to.y;
     }
 }
 
