@@ -12,6 +12,11 @@ class Rook extends AbstractPiece {
      * @return {boolean}
      */
     canMove(from, to) {
+        // Check from != to
+        const differentSquares = super.canMove(from, to);
+        if (!differentSquares) {
+            return false;
+        }
 
         // Check the basic movement
         const movementLooksValid = from.x === to.x || from.y === to.y;

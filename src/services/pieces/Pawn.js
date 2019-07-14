@@ -13,9 +13,13 @@ class Pawn extends AbstractPiece {
      * @return {boolean}
      */
     canMove(from, to) {
+        // Check from != to
+        const differentSquares = super.canMove(from, to);
+        if (!differentSquares) {
+            return false;
+        }
 
         const availableMoves = this.getAvailableMoves()[this.color];
-
         for (const moveInfo of availableMoves) {
             const currTo = {};
             currTo.x     = from.x + moveInfo.square.x;
