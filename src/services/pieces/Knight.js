@@ -6,7 +6,7 @@ import AbstractPiece from "./AbstractPiece";
 class Knight extends AbstractPiece {
 
     /**
-     * Whether the pawn can move from a location to another
+     * Whether the knight can move from a location to another
      * @param {object} from {x : x, y : y}
      * @param {object} to {x : x, y : y}
      * @return {boolean}
