@@ -76,7 +76,7 @@ class ChessBoard {
      * Returns the square piece
      * @param {int} x
      * @param {int} y
-     * @return {string}
+     * @return {string|null}
      */
     getPieceId(x, y) {
         return this.matrix[y][x];

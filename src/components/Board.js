@@ -1,8 +1,9 @@
-import React      from 'react';
-import Square     from "./Square";
-import ChessBoard from "../services/ChessBoard";
-import mainConfig from '../config/main';
+import React       from 'react';
+import Square      from "./Square";
+import ChessBoard  from "../services/ChessBoard";
+import mainConfig  from '../config/main';
 import pieceConfig from '../config/piece';
+import Pawn        from "../services/pieces/Pawn";
 
 /**
  * The chess board component
@@ -26,7 +27,7 @@ class Board extends React.Component {
      * @return {*}
      */
     render() {
-        const whoPlays = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'White' : 'Black';
+        const whoPlays    = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'White' : 'Black';
         let whoPlaysClass = 'who-plays ';
         whoPlaysClass += this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'white' : 'black';
 
@@ -97,7 +98,7 @@ class Board extends React.Component {
             !chessBoard.hasSelectedCoords()
             && chessBoard.hasPiece(x, y)
         ) {
-            const player = this.state.chessBoard.getPlayer();
+            const player     = this.state.chessBoard.getPlayer();
             const pieceColor = chessBoard.getPieceId(x, y)[0];
             if (pieceColor !== player) {
                 return;
@@ -108,6 +109,43 @@ class Board extends React.Component {
         }
         // Move the piece to its new location
         else if (chessBoard.hasSelectedCoords()) {
+
+            // Change the selected piece
+            const targetPiece = this.state.chessBoard.getPieceId(x, y);
+            if (
+                targetPiece !== null
+                && targetPiece[0] === this.state.chessBoard.getPlayer()
+            ) {
+                chessBoard.selectCoords(x, y);
+                this.setState({chessBoard : chessBoard});
+            }
+
+            // Get the selected piece
+            const selectedCoords = this.state.chessBoard.getSelectedCoords();
+            const selectedPiece  = this.state.chessBoard.getPieceId(
+                selectedCoords.x,
+                selectedCoords.y
+            );
+
+            // Check if the piece can move
+            // TODO: use a factory to create piece objects
+            let canMove = true;
+            if (selectedPiece[1] === 'p') {
+                const pawn = new Pawn(
+                    this.state.chessBoard,
+                    selectedPiece[0]
+                );
+                canMove    = pawn.canMove(
+                    selectedCoords,
+                    {x : x, y : y}
+                );
+            }
+
+            if (!canMove) {
+                return;
+            }
+
+            // Move the piece
             chessBoard.moveSelectedTo(x, y);
             chessBoard.unselectCoords();
             chessBoard.changePlayer();
