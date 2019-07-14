@@ -99,7 +99,7 @@ class Board extends React.Component {
             && chessBoard.hasPiece(x, y)
         ) {
             const player     = this.state.chessBoard.getPlayer();
-            const pieceColor = chessBoard.getPiece(x, y)[0];
+            const pieceColor = chessBoard.getPiece(x, y).getColor();
             if (pieceColor !== player) {
                 return;
             }
@@ -114,10 +114,11 @@ class Board extends React.Component {
             const targetPiece = this.state.chessBoard.getPiece(x, y);
             if (
                 targetPiece !== null
-                && targetPiece[0] === this.state.chessBoard.getPlayer()
+                && targetPiece.getColor() === this.state.chessBoard.getPlayer()
             ) {
                 chessBoard.selectCoords(x, y);
                 this.setState({chessBoard : chessBoard});
+                return;
             }
 
             // Get the selected piece
@@ -128,18 +129,10 @@ class Board extends React.Component {
             );
 
             // Check if the piece can move
-            // TODO: use a factory to create piece objects
-            let canMove = true;
-            if (selectedPiece[1] === 'p') {
-                const pawn = new Pawn(
-                    this.state.chessBoard,
-                    selectedPiece[0]
-                );
-                canMove    = pawn.canMove(
-                    selectedCoords,
-                    {x : x, y : y}
-                );
-            }
+            let canMove = selectedPiece.canMove(
+                selectedCoords,
+                {x : x, y : y}
+            );
 
             if (!canMove) {
                 return;
