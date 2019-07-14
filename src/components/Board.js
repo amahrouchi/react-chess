@@ -99,7 +99,7 @@ class Board extends React.Component {
             && chessBoard.hasPiece(x, y)
         ) {
             const player     = this.state.chessBoard.getPlayer();
-            const pieceColor = chessBoard.getPieceId(x, y)[0];
+            const pieceColor = chessBoard.getPiece(x, y)[0];
             if (pieceColor !== player) {
                 return;
             }
@@ -111,7 +111,7 @@ class Board extends React.Component {
         else if (chessBoard.hasSelectedCoords()) {
 
             // Change the selected piece
-            const targetPiece = this.state.chessBoard.getPieceId(x, y);
+            const targetPiece = this.state.chessBoard.getPiece(x, y);
             if (
                 targetPiece !== null
                 && targetPiece[0] === this.state.chessBoard.getPlayer()
@@ -122,7 +122,7 @@ class Board extends React.Component {
 
             // Get the selected piece
             const selectedCoords = this.state.chessBoard.getSelectedCoords();
-            const selectedPiece  = this.state.chessBoard.getPieceId(
+            const selectedPiece  = this.state.chessBoard.getPiece(
                 selectedCoords.x,
                 selectedCoords.y
             );

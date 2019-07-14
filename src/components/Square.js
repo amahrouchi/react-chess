@@ -18,9 +18,9 @@ class Square extends React.Component {
 
         // Piece on the square
         const hasPiece = this.props.chessBoard.hasPiece(this.props.x, this.props.y);
-        const pieceId  = hasPiece ? this.props.chessBoard.getPieceId(this.props.x, this.props.y) : null;
+        const pieceObject  = hasPiece ? this.props.chessBoard.getPiece(this.props.x, this.props.y) : null;
         const piece    = hasPiece
-                         ? <Piece type={pieceId}/>
+                         ? <Piece object={pieceObject}/>
                          : '';
 
         return (

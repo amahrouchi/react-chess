@@ -24,7 +24,7 @@ class Piece extends React.Component
      * @return {string}
      */
     getPath() {
-        return mainConfig.PIECE_PATH + this.props.type + '.svg';
+        return mainConfig.PIECE_PATH + this.props.object.getColor() + this.props.object.getType() + '.svg';
     }
 }
 

@@ -1,4 +1,6 @@
-import pieceConfig from '../config/piece';
+import pieceConfig  from '../config/piece';
+import mainConfig   from "../config/main";
+import PieceFactory from "./pieces/PieceFactory";
 
 /**
  * The ChessBoard class
@@ -16,7 +18,7 @@ class ChessBoard {
         if (typeof matrix !== 'undefined') {
             this.matrix = matrix;
         } else {
-            this.matrix = this.initMatrix();
+            this.initMatrix();
         }
 
         // Init selected coordinates
@@ -41,19 +43,20 @@ class ChessBoard {
 
     /**
      * Init the matrix
-     * @return {Array}
+     * @return {void}
      */
     initMatrix() {
-        return this.matrix = [
-            [pieceConfig.BLACK_ROOK, pieceConfig.BLACK_KNIGHT, pieceConfig.BLACK_BISHOP, pieceConfig.BLACK_QUEEN, pieceConfig.BLACK_KING, pieceConfig.BLACK_BISHOP, pieceConfig.BLACK_KNIGHT, pieceConfig.BLACK_ROOK],
-            Array(8).fill(pieceConfig.BLACK_PAWN),
-            Array(8).fill(null),
-            Array(8).fill(null),
-            Array(8).fill(null),
-            Array(8).fill(null),
-            Array(8).fill(pieceConfig.WHITE_PAWN),
-            [pieceConfig.WHITE_ROOK, pieceConfig.WHITE_KNIGHT, pieceConfig.WHITE_BISHOP, pieceConfig.WHITE_QUEEN, pieceConfig.WHITE_KING, pieceConfig.WHITE_BISHOP, pieceConfig.WHITE_KNIGHT, pieceConfig.WHITE_ROOK],
-        ];
+        const initialMatrix = mainConfig.INITIAL_MATRIX;
+
+        this.matrix = [[],[],[],[],[],[],[],[]];
+        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
+            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
+                const pieceId     = initialMatrix[y][x];
+                this.matrix[y][x] = pieceId !== null
+                                    ? PieceFactory.create(pieceId, this)
+                                    : null;
+            }
+        }
     }
 
     /**
@@ -76,9 +79,9 @@ class ChessBoard {
      * Returns the square piece
      * @param {int} x
      * @param {int} y
-     * @return {string|null}
+     * @return {AbstractPiece|null}
      */
-    getPieceId(x, y) {
+    getPiece(x, y) {
         return this.matrix[y][x];
     }
 

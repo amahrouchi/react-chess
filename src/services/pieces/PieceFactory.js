@@ -24,22 +24,22 @@ class PieceFactory {
 
         switch (pieceType) {
             case pieceConfig.PAWN:
-                return new Pawn(chessBoard, pieceColor);
+                return new Pawn(chessBoard, pieceType, pieceColor);
 
             case pieceConfig.KNIGHT:
-                return new Knight(chessBoard, pieceColor);
+                return new Knight(chessBoard, pieceType, pieceColor);
 
             case pieceConfig.BISHOP:
-                return new Bishop(chessBoard, pieceColor);
+                return new Bishop(chessBoard, pieceType, pieceColor);
 
             case pieceConfig.ROOK:
-                return new Rook(chessBoard, pieceColor);
+                return new Rook(chessBoard, pieceType, pieceColor);
 
             case pieceConfig.QUEEN:
-                return new Queen(chessBoard, pieceColor);
+                return new Queen(chessBoard, pieceType, pieceColor);
 
             case pieceConfig.KING:
-                return new King(chessBoard, pieceColor);
+                return new King(chessBoard, pieceType, pieceColor);
 
             default:
                 throw new Error('Unknown chess piece type: "' + pieceType + '"')

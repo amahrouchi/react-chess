@@ -4,16 +4,16 @@ import AbstractPiece from "./AbstractPiece";
 /**
  * Handles the behaviour of a pawn
  */
-class Pawn extends AbstractPiece{
+class Pawn extends AbstractPiece {
 
     /**
      * Pawn constructor
      * @param {ChessBoard} chessBoard
      * @param color
      */
-    constructor(chessBoard, color) {
-        super(chessBoard,color);
-        this.hasMoved   = false;
+    constructor(chessBoard, type, color) {
+        super(chessBoard, type, color);
+        this.hasMoved = false;
     }
 
     /**
@@ -67,7 +67,7 @@ class Pawn extends AbstractPiece{
                 case 'take':
                 case 'take2':
 
-                    const targetPiece = this.chessBoard.getPieceId(to.x, to.y);
+                    const targetPiece = this.chessBoard.getPiece(to.x, to.y);
 
                     return targetPiece !== null
                         && this.color !== targetPiece[0];

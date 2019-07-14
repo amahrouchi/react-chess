@@ -6,11 +6,29 @@ class AbstractPiece {
     /**
      * Constructor
      * @param {ChessBoard} chessBoard
-     * @param color
+     * @param {string} type
+     * @param {string} color
      */
-    constructor(chessBoard, color) {
+    constructor(chessBoard, type, color) {
         this.chessBoard = chessBoard;
+        this.type       = type;
         this.color      = color;
+    }
+
+    /**
+     * Gets the piece color
+     * @return {string}
+     */
+    getColor() {
+        return this.color;
+    }
+
+    /**
+     * Gets the piece type
+     * @return {string}
+     */
+    getType() {
+        return this.type;
     }
 
     /**
