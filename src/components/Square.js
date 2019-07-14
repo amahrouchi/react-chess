@@ -17,11 +17,16 @@ class Square extends React.Component {
         const className     = 'square' + colorClass + selectedClass;
 
         // Piece on the square
-        const hasPiece = this.props.chessBoard.hasPiece(this.props.x, this.props.y);
-        const pieceObject  = hasPiece ? this.props.chessBoard.getPiece(this.props.x, this.props.y) : null;
-        const piece    = hasPiece
-                         ? <Piece object={pieceObject}/>
-                         : '';
+        const hasPiece    = this.props.chessBoard.hasPiece(this.props.x, this.props.y);
+        const pieceObject = hasPiece ? this.props.chessBoard.getPiece(this.props.x, this.props.y) : null;
+        const piece       = hasPiece
+                            ? <Piece object={pieceObject}/>
+                            : '';
+
+        // Refresh the chessboard object in the pieces
+        if (hasPiece) {
+            pieceObject.setChessBoard(this.props.chessBoard);
+        }
 
         return (
             <div className={className}

@@ -12,8 +12,14 @@ class ChessBoard {
      * @param {Array} matrix The matrix representing the board state
      * @param {object} selectedCoords {x : <value>, y : <value>}
      * @param {string} player Current player ('w' or 'b')
+     * @param {AbstractPiece} lastPieceMoved
      */
-    constructor(matrix, selectedCoords, player) {
+    constructor(
+        matrix,
+        selectedCoords,
+        player,
+        lastPieceMoved
+    ) {
         // Init matrix
         if (typeof matrix !== 'undefined') {
             this.matrix = matrix;
@@ -30,6 +36,11 @@ class ChessBoard {
         this.player = pieceConfig.WHITE;
         if (typeof player !== 'undefined') {
             this.player = player;
+        }
+
+        this.lastPieceMoved = null;
+        if (typeof lastPieceMoved !== 'undefined') {
+            this.lastPieceMoved = lastPieceMoved;
         }
     }
 
@@ -74,6 +85,7 @@ class ChessBoard {
         this.matrix[this.selectedCoords.y][this.selectedCoords.x] = null;
         this.matrix[y][x]                                         = piece;
         piece.setHasMoved(true);
+        this.lastPieceMoved = piece;
     }
 
     /**
@@ -94,6 +106,16 @@ class ChessBoard {
      */
     hasPiece(x, y) {
         return this.matrix[y][x] !== null;
+    }
+
+    /**
+     * Removes a piece from the board
+     * @param {int} x
+     * @param {int} y
+     * @return {void}
+     */
+    removePiece(x, y) {
+        this.matrix[y][x] = null;
     }
 
     /**
@@ -156,6 +178,14 @@ class ChessBoard {
      */
     changePlayer() {
         this.player = this.player === pieceConfig.BLACK ? pieceConfig.WHITE : pieceConfig.BLACK;
+    }
+
+    /**
+     * Gets the last piece moved
+     * @return {AbstractPiece|null}
+     */
+    getLastPieceMoved() {
+        return this.lastPieceMoved;
     }
 }
 

@@ -39,15 +39,25 @@ class Pawn extends AbstractPiece {
                 // Take an opponent piece
                 case 'take':
                 case 'take2':
-
                     const targetPiece = this.chessBoard.getPiece(to.x, to.y);
-
                     return targetPiece !== null
                         && this.color !== targetPiece[0];
 
-                // TODO
-                // case 'en_passant':
-                //     break;
+                // Take opponent pawn "en passant"
+                case 'en_passant':
+                case 'en_passant2':
+                    const increment       = this.color === pieceConfig.WHITE ? 1 : -1;
+                    const opponentPawn    = this.chessBoard.getPiece(to.x, to.y + increment);
+                    const hasOpponentPawn = opponentPawn !== null
+                        && opponentPawn.type === pieceConfig.PAWN
+                        && this.chessBoard.getLastPieceMoved() === opponentPawn;
+
+                    if (hasOpponentPawn) {
+                        this.chessBoard.removePiece(to.x, to.y + increment);
+                        return true;
+                    }
+
+                    break;
 
                 // Unknown move...
                 default:
@@ -76,6 +86,14 @@ class Pawn extends AbstractPiece {
                 square : {x : 0, y : -2},
             },
             {
+                type   : 'en_passant',
+                square : {x : -1, y : -1},
+            },
+            {
+                type   : 'en_passant2',
+                square : {x : 1, y : -1},
+            },
+            {
                 type   : 'take',
                 square : {x : -1, y : -1},
             },
@@ -94,6 +112,14 @@ class Pawn extends AbstractPiece {
             {
                 type   : 'forward2',
                 square : {x : 0, y : 2},
+            },
+            {
+                type   : 'en_passant',
+                square : {x : -1, y : 1},
+            },
+            {
+                type   : 'en_passant2',
+                square : {x : 1, y : 1},
             },
             {
                 type   : 'take',

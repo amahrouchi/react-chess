@@ -17,6 +17,15 @@ class AbstractPiece {
     }
 
     /**
+     * Sets the chessboard
+     * @param {ChessBoard} chessBoard
+     * @return {void}
+     */
+    setChessBoard(chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
+    /**
      * Gets the piece color
      * @return {string}
      */

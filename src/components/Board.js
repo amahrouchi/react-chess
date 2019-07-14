@@ -90,7 +90,8 @@ class Board extends React.Component {
         const chessBoard     = new ChessBoard(
             matrix,
             selectedCoords,
-            this.state.chessBoard.getPlayer()
+            this.state.chessBoard.getPlayer(),
+            this.state.chessBoard.getLastPieceMoved()
         );
 
         // Select a piece to move
