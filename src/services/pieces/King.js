@@ -62,12 +62,23 @@ class King extends AbstractPiece {
                                 return false;
                             }
 
-                            // TODO: check if the king's path is on check
+                            // Check if the king's path is safe
+                            const rookCoordsAfter = {
+                                x : this.coords.x + move.rookCoordsAfter[0],
+                                y : this.coords.y + move.rookCoordsAfter[1]
+                            };
+                            if (
+                                this.chessBoard.isAttacked(this.color, this.coords)
+                                || this.chessBoard.isAttacked(this.color, rookCoordsAfter)
+                                || this.chessBoard.isAttacked(this.color, to)
+                            ) {
+                                return false;
+                            }
 
                             // Get the rook position piece
                             const rook = this.chessBoard.getPiece(rookCoords.x, rookCoords.y);
 
-                            // Check if the piece on this squqre is a rook
+                            // Check if the piece on this square is a rook
                             if (
                                 rook === null
                                 || rook.getType() !== pieceConfig.ROOK
@@ -78,11 +89,7 @@ class King extends AbstractPiece {
                             // Check if the rook has moved
                             const rookHasMoved = rook.getHasMoved();
                             if (!rookHasMoved) {
-                                const matrix          = this.chessBoard.getMatrix();
-                                const rookCoordsAfter = {
-                                    x : this.coords.x + move.rookCoordsAfter[0],
-                                    y : this.coords.y + move.rookCoordsAfter[1]
-                                };
+                                const matrix = this.chessBoard.getMatrix();
 
                                 // Move the rook to is final location
                                 matrix[rookCoords.y][rookCoords.x]           = null;
