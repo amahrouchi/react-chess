@@ -32,8 +32,6 @@ class King extends AbstractPiece {
                     currSquare.x === to.x
                     && currSquare.y === to.y
                 ) {
-                    console.log(move.type);
-
                     switch (move.type) {
                         case 'one_square':
                             hasMatched = true;
@@ -94,6 +92,7 @@ class King extends AbstractPiece {
                                 // Move the rook to is final location
                                 matrix[rookCoords.y][rookCoords.x]           = null;
                                 matrix[rookCoordsAfter.y][rookCoordsAfter.x] = rook;
+                                rook.setHasMoved(true);
                                 return true;
                             }
 
