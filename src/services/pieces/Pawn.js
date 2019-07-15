@@ -21,8 +21,8 @@ class Pawn extends AbstractPiece {
         const availableMoves = this.getAvailableMoves()[this.color];
         for (const moveInfo of availableMoves) {
             const currTo = {};
-            currTo.x     = from.x + moveInfo.square.x;
-            currTo.y     = from.y + moveInfo.square.y;
+            currTo.x     = from.x + moveInfo.coords.x;
+            currTo.y     = from.y + moveInfo.coords.y;
 
             if (currTo.x !== to.x || currTo.y !== to.y) {
                 continue;
@@ -82,27 +82,27 @@ class Pawn extends AbstractPiece {
         moves[pieceConfig.WHITE] = [
             {
                 type   : 'forward',
-                square : {x : 0, y : -1},
+                coords : {x : 0, y : -1},
             },
             {
                 type   : 'forward2',
-                square : {x : 0, y : -2},
+                coords : {x : 0, y : -2},
             },
             {
                 type   : 'en_passant',
-                square : {x : -1, y : -1},
+                coords : {x : -1, y : -1},
             },
             {
                 type   : 'en_passant2',
-                square : {x : 1, y : -1},
+                coords : {x : 1, y : -1},
             },
             {
                 type   : 'take',
-                square : {x : -1, y : -1},
+                coords : {x : -1, y : -1},
             },
             {
                 type   : 'take2',
-                square : {x : 1, y : -1},
+                coords : {x : 1, y : -1},
             },
         ];
 
@@ -110,27 +110,27 @@ class Pawn extends AbstractPiece {
         moves[pieceConfig.BLACK] = [
             {
                 type   : 'forward',
-                square : {x : 0, y : 1},
+                coords : {x : 0, y : 1},
             },
             {
                 type   : 'forward2',
-                square : {x : 0, y : 2},
+                coords : {x : 0, y : 2},
             },
             {
                 type   : 'en_passant',
-                square : {x : -1, y : 1},
+                coords : {x : -1, y : 1},
             },
             {
                 type   : 'en_passant2',
-                square : {x : 1, y : 1},
+                coords : {x : 1, y : 1},
             },
             {
                 type   : 'take',
-                square : {x : -1, y : 1},
+                coords : {x : -1, y : 1},
             },
             {
                 type   : 'take2',
-                square : {x : 1, y : 1},
+                coords : {x : 1, y : 1},
             },
         ];
 
