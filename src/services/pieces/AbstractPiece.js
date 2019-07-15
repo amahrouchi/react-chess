@@ -1,8 +1,6 @@
 /**
  * Handles the behaviour of a chess piece
  */
-import mainConfig from "../../config/main";
-
 class AbstractPiece {
 
     /**
@@ -72,6 +70,14 @@ class AbstractPiece {
             x : x,
             y : y,
         };
+    }
+
+    /**
+     * Whether the piece has moved
+     * @return {boolean}
+     */
+    getHasMoved() {
+        return this.hasMoved;
     }
 
     /**
