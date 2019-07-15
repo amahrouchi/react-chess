@@ -27,19 +27,35 @@ class Board extends React.Component {
      * @return {*}
      */
     render() {
-        const whoPlays    = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'White' : 'Black';
+        let whoPlays      = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'White to play' : 'Black to play';
         let whoPlaysClass = 'who-plays ';
         whoPlaysClass += this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'white' : 'black';
 
-        const check = this.state.chessBoard.kingInCheck()
-                      ? <span className="check">(check!)</span>
-                      : '';
+        const inCheck = this.state.chessBoard.kingInCheck();
+        let check     = inCheck
+                        ? <span className="check">(check!)</span>
+                        : '';
+        // Check the mate
+        if (
+            inCheck
+            && this.state.chessBoard.kingIsMate()
+        ) {
+            // Game over
+            const winner = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'Black' : 'White';
+            whoPlays     = '';
+            check        = (
+                <span className="check">
+                    Check mate! <br/>
+                    {winner} wins!
+                </span>
+            );
+        }
 
         return (
             <div className="board">
                 {this.buildBoard()}
                 <div className={whoPlaysClass}>
-                    {whoPlays} to play {check}
+                    {whoPlays} {check}
                 </div>
             </div>
         );

@@ -250,6 +250,15 @@ class ChessBoard {
 
         return false;
     }
+
+    /**
+     * Checks if the king is mate
+     * @return {boolean}
+     */
+    kingIsMate() {
+        // TODO
+        return false;
+    }
 }
 
 export default ChessBoard;
