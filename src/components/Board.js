@@ -1,9 +1,9 @@
 import React       from 'react';
-import Square      from "./Square";
-import ChessBoard  from "../services/ChessBoard";
+import _           from 'lodash';
+import Square      from './Square';
+import ChessBoard  from '../services/ChessBoard';
 import mainConfig  from '../config/main';
 import pieceConfig from '../config/piece';
-import _           from "lodash";
 
 /**
  * The chess board component
