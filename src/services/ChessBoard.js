@@ -15,33 +15,26 @@ class ChessBoard {
      * @param {AbstractPiece} lastPieceMoved
      */
     constructor(
-        matrix,
-        selectedCoords,
-        player,
-        lastPieceMoved
+        matrix         = null,
+        selectedCoords = null,
+        player         = pieceConfig.WHITE,
+        lastPieceMoved = null
     ) {
         // Init matrix
-        if (typeof matrix !== 'undefined') {
+        if (matrix !== null) {
             this.matrix = matrix;
         } else {
             this.initMatrix();
         }
 
         // Init selected coordinates
-        this.selectedCoords = null;
-        if (typeof selectedCoords !== 'undefined') {
-            this.selectedCoords = selectedCoords;
-        }
+        this.selectedCoords = selectedCoords;
 
-        this.player = pieceConfig.WHITE;
-        if (typeof player !== 'undefined') {
-            this.player = player;
-        }
+        // Init the player to play
+        this.player = player;
 
-        this.lastPieceMoved = null;
-        if (typeof lastPieceMoved !== 'undefined') {
-            this.lastPieceMoved = lastPieceMoved;
-        }
+        // Inits the last piece moved
+        this.lastPieceMoved = lastPieceMoved;
     }
 
     /**
@@ -58,7 +51,7 @@ class ChessBoard {
      */
     getMatrixCopy() {
 
-        const matrix = [[],[],[],[],[],[],[],[]];
+        const matrix = [[], [], [], [], [], [], [], []];
         for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
             for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
                 matrix[y][x] = this.matrix[y][x];
