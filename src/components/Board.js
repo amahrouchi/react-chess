@@ -27,9 +27,10 @@ class Board extends React.Component {
      * @return {*}
      */
     render() {
-        let whoPlays      = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'White to play' : 'Black to play';
+        const isWhite     = this.state.chessBoard.getPlayer() === pieceConfig.WHITE;
+        let whoPlays      = isWhite ? 'White to play' : 'Black to play';
         let whoPlaysClass = 'who-plays ';
-        whoPlaysClass += this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'white' : 'black';
+        whoPlaysClass += isWhite ? 'white' : 'black';
 
         const inCheck = this.state.chessBoard.kingInCheck();
         let check     = inCheck
@@ -41,7 +42,7 @@ class Board extends React.Component {
             && this.state.chessBoard.kingIsMate()
         ) {
             // Game over
-            const winner = this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'Black' : 'White';
+            const winner = isWhite ? 'Black' : 'White';
             whoPlays     = '';
             check        = (
                 <span className="check">
