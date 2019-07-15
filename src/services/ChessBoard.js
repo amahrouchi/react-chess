@@ -53,6 +53,22 @@ class ChessBoard {
     }
 
     /**
+     * Gets the matrix copy
+     * @return {Array}
+     */
+    getMatrixCopy() {
+
+        const matrix = [[],[],[],[],[],[],[],[]];
+        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
+            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
+                matrix[y][x] = this.matrix[y][x];
+            }
+        }
+
+        return matrix;
+    }
+
+    /**
      * Initializes the matrix
      * @return {void}
      */
@@ -187,6 +203,59 @@ class ChessBoard {
      */
     getLastPieceMoved() {
         return this.lastPieceMoved;
+    }
+
+    /**
+     * Whether the current piece is attacked
+     * @return {boolean}
+     */
+    isAttacked(playerColor, coords) {
+
+        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
+            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
+                // Get the current piece
+                const piece = this.getPiece(x, y);
+                if (
+                    piece === null
+                    || piece.getColor() === playerColor
+                ) {
+                    continue;
+                }
+
+                const attacking = piece.canMove(
+                    {x : x, y : y},
+                    {x : coords.x, y : coords.y}
+                );
+
+                if (attacking) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a playing king is check
+     * @return {boolean}
+     */
+    kingInCheck() {
+        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
+            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
+                const piece = this.getPiece(x, y);
+                if (
+                    piece !== null
+                    && piece.getType() === pieceConfig.KING
+                    && piece.getColor() === this.getPlayer()
+                    && piece.isAttacked()
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
 

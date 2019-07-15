@@ -3,7 +3,7 @@ import Square      from "./Square";
 import ChessBoard  from "../services/ChessBoard";
 import mainConfig  from '../config/main';
 import pieceConfig from '../config/piece';
-import Pawn        from "../services/pieces/Pawn";
+import _           from "lodash";
 
 /**
  * The chess board component
@@ -31,11 +31,15 @@ class Board extends React.Component {
         let whoPlaysClass = 'who-plays ';
         whoPlaysClass += this.state.chessBoard.getPlayer() === pieceConfig.WHITE ? 'white' : 'black';
 
+        const check = this.state.chessBoard.kingInCheck()
+                      ? <span className="check">(check!)</span>
+                      : '';
+
         return (
             <div className="board">
                 {this.buildBoard()}
                 <div className={whoPlaysClass}>
-                    {whoPlays} to play
+                    {whoPlays} to play {check}
                 </div>
             </div>
         );
@@ -85,14 +89,7 @@ class Board extends React.Component {
      * @return {void}
      */
     clickSquare(x, y) {
-        const matrix         = this.state.chessBoard.getMatrix().slice();
-        const selectedCoords = this.state.chessBoard.getSelectedCoords();
-        const chessBoard     = new ChessBoard(
-            matrix,
-            selectedCoords,
-            this.state.chessBoard.getPlayer(),
-            this.state.chessBoard.getLastPieceMoved()
-        );
+        const chessBoard = _.cloneDeep(this.state.chessBoard);
 
         // Select a piece to move
         if (
@@ -141,6 +138,10 @@ class Board extends React.Component {
 
             // Move the piece
             chessBoard.moveSelectedTo(x, y);
+            if (chessBoard.kingInCheck()) {
+                return;
+            }
+
             chessBoard.unselectCoords();
             chessBoard.changePlayer();
             this.setState({chessBoard : chessBoard});

@@ -55,6 +55,14 @@ class AbstractPiece {
     }
 
     /**
+     * Gets piece coords
+     * @return {Object}
+     */
+    getCoords() {
+        return this.coords;
+    }
+
+    /**
      * Sets the piece coords
      * @param {int} x
      * @param {int} y
@@ -81,31 +89,7 @@ class AbstractPiece {
      * @return {boolean}
      */
     isAttacked() {
-
-        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
-            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
-                // Get the current piece
-                const piece = this.chessBoard.getPiece(x, y);
-                if (
-                    piece === null
-                    || piece.getColor() === this.getColor()
-                ) {
-                    continue;
-                }
-
-                const attacking = piece.canMove(
-                    {x : x, y : y},
-                    {x : this.coords.x, y : this.coords.y}
-                );
-
-                if (attacking) {
-                    console.log(piece);
-                    return true;
-                }
-            }
-        }
-
-        return false;
+        return this.chessBoard.isAttacked(this.color, this.coords);
     }
 }
 
