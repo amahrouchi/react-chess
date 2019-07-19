@@ -1,7 +1,7 @@
 import pieceConfig  from '../config/piece';
 import mainConfig   from "../config/main";
 import PieceFactory from "./pieces/PieceFactory";
-import * as _       from "lodash";
+import {cloneDeep}  from "lodash";
 
 /**
  * The ChessBoard class
@@ -290,7 +290,7 @@ class ChessBoard {
                             }
 
                             // Move the piece and check if the king is still in check
-                            let chessBoardClone = _.cloneDeep(this);
+                            let chessBoardClone = cloneDeep(this);
                             chessBoardClone.selectCoords(pieceX, pieceY);
                             chessBoardClone.moveSelectedTo(moveX, moveY);
 

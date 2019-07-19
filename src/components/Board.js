@@ -1,5 +1,5 @@
 import React       from 'react';
-import _           from 'lodash';
+import {cloneDeep} from 'lodash';
 import Square      from './Square';
 import ChessBoard  from '../services/ChessBoard';
 import mainConfig  from '../config/main';
@@ -103,7 +103,7 @@ class Board extends React.Component {
      * @return {void}
      */
     clickSquare(x, y) {
-        const chessBoard = _.cloneDeep(this.state.chessBoard);
+        const chessBoard = cloneDeep(this.state.chessBoard);
 
         // Select a piece to move
         if (
