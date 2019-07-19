@@ -1,6 +1,7 @@
 import pieceConfig  from '../config/piece';
 import mainConfig   from "../config/main";
 import PieceFactory from "./pieces/PieceFactory";
+import * as _       from "lodash";
 
 /**
  * The ChessBoard class
@@ -255,9 +256,56 @@ class ChessBoard {
      * Checks if the king is mate
      * @return {boolean}
      */
-    kingIsMate() {
-        // TODO
-        return false;
+    kingIsMate(isCheck = true) {
+
+        /*
+         * This algorithm is probably the worst to check for a mate
+         * TODO: improve it!
+         */
+
+        if (!isCheck) {
+            return false;
+        }
+
+        // Find all player's pieces
+        for (let pieceY = 0; pieceY < mainConfig.BOARD_SIZE; pieceY++) {
+            for (let pieceX = 0; pieceX < mainConfig.BOARD_SIZE; pieceX++) {
+                const piece = this.getPiece(pieceX, pieceY);
+                if (
+                    piece !== null
+                    && piece.getColor() === this.getPlayer()
+                ) {
+
+                    // Check all current piece moves
+                    for (let moveY = 0; moveY < mainConfig.BOARD_SIZE; moveY++) {
+                        for (let moveX = 0; moveX < mainConfig.BOARD_SIZE; moveX++) {
+
+                            const canMove = piece.canMove(
+                                {x : pieceX, y : pieceY},
+                                {x : moveX, y : moveY}
+                            );
+
+                            if (!canMove) {
+                                continue;
+                            }
+
+                            // Move the piece and check if the king is still in check
+                            let chessBoardClone = _.cloneDeep(this);
+                            chessBoardClone.selectCoords(pieceX, pieceY);
+                            chessBoardClone.moveSelectedTo(moveX, moveY);
+
+                            // If the king is not in check after this move, it means that it is not a mate
+                            if (!chessBoardClone.kingInCheck()) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // All available moves cannot prevent the current check, so it is mate
+        return true;
     }
 }
 

@@ -37,10 +37,7 @@ class Board extends React.Component {
                         ? <span className="check">(check!)</span>
                         : '';
         // Check the mate
-        if (
-            inCheck
-            && this.state.chessBoard.kingIsMate()
-        ) {
+        if (this.state.chessBoard.kingIsMate(inCheck)) {
             // Game over
             const winner = isWhite ? 'Black' : 'White';
             whoPlays     = '';
