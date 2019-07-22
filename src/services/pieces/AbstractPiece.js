@@ -91,6 +91,14 @@ class AbstractPiece {
     }
 
     /**
+     * What to do after a move
+     * @return {void}
+     */
+    afterMove() {
+        return;
+    }
+
+    /**
      * Whether the current piece is attacked
      * @return {boolean}
      */

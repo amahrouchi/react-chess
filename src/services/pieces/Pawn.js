@@ -7,6 +7,19 @@ import AbstractPiece from "./AbstractPiece";
 class Pawn extends AbstractPiece {
 
     /**
+     * Constructor
+     * @param {ChessBoard} chessBoard
+     * @param {string} type
+     * @param {string} color
+     * @param {object} coords {x : [value], y : [value]}
+     */
+    constructor(chessBoard, type, color, coords) {
+        super(chessBoard, type, color, coords);
+
+        this.pieceToRemoveAfter = null;
+    }
+
+    /**
      * Whether the pawn can move from a location to another
      * @param {object} from {x : x, y : y}
      * @param {object} to {x : x, y : y}
@@ -59,7 +72,10 @@ class Pawn extends AbstractPiece {
                         && this.chessBoard.getLastPieceMoved() === opponentPawn;
 
                     if (hasOpponentPawn) {
-                        this.chessBoard.removePiece(to.x, to.y + increment);
+                        this.pieceToRemoveAfter = {
+                            x : to.x,
+                            y : to.y + increment
+                        };
                         return true;
                     }
 
@@ -80,6 +96,20 @@ class Pawn extends AbstractPiece {
         }
 
         return false;
+    }
+
+    /**
+     * Remove the pawn after an "en passant" move
+     * @return {void}
+     */
+    afterMove() {
+        if (this.pieceToRemoveAfter !== null) {
+            this.chessBoard.removePiece(
+                this.pieceToRemoveAfter.x,
+                this.pieceToRemoveAfter.y
+            );
+            this.pieceToRemoveAfter = null;
+        }
     }
 
     /**

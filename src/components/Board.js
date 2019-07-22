@@ -156,6 +156,8 @@ class Board extends React.Component {
                 return;
             }
 
+            selectedPiece.afterMove();
+
             chessBoard.unselectCoords();
             chessBoard.changePlayer();
             this.setState({chessBoard : chessBoard});
