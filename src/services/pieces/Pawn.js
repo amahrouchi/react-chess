@@ -99,7 +99,7 @@ class Pawn extends AbstractPiece {
     }
 
     /**
-     * Remove the pawn after an "en passant" move
+     * Remove the opponent pawn after taking "en passant"
      * @return {void}
      */
     afterMove() {
