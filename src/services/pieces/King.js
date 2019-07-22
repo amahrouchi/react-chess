@@ -6,6 +6,20 @@ import Rook          from "./Rook";
  * Handles the behaviour of a king
  */
 class King extends AbstractPiece {
+
+    /**
+     * Constructor
+     * @param {ChessBoard} chessBoard
+     * @param {string} type
+     * @param {string} color
+     * @param {object} coords {x : [value], y : [value]}
+     */
+    constructor(chessBoard, type, color, coords) {
+        super(chessBoard, type, color, coords);
+
+        this.castlingRook = null;
+    }
+
     /**
      * Whether the king can move from a location to another
      * @param {object} from {x : x, y : y}
@@ -87,12 +101,15 @@ class King extends AbstractPiece {
                             // Check if the rook has moved
                             const rookHasMoved = rook.getHasMoved();
                             if (!rookHasMoved) {
-                                const matrix = this.chessBoard.getMatrix();
+                                // Store the castling rook data
+                                this.castlingRook = {
+                                    piece : rook,
+                                    after : {
+                                        x : rookCoordsAfter.x,
+                                        y : rookCoordsAfter.y,
+                                    },
+                                };
 
-                                // Move the rook to is final location
-                                matrix[rookCoords.y][rookCoords.x]           = null;
-                                matrix[rookCoordsAfter.y][rookCoordsAfter.x] = rook;
-                                rook.setHasMoved(true);
                                 return true;
                             }
 
@@ -112,6 +129,25 @@ class King extends AbstractPiece {
         const targetPiece = this.chessBoard.getPiece(to.x, to.y);
 
         return targetPiece === null || targetPiece.getColor() !== this.getColor();
+    }
+
+    /**
+     * After validating and performing the castling move, move the rook
+     * @return {void}
+     */
+    afterMove() {
+        if (this.castlingRook !== null) {
+            const matrix = this.chessBoard.getMatrix();
+
+            // Move the rook to is final location
+            matrix[this.castlingRook.piece.getCoords().y][this.castlingRook.piece.getCoords().x] = null;
+            matrix[this.castlingRook.after.y][this.castlingRook.after.x]                         = this.castlingRook.piece;
+
+            this.castlingRook.piece.setCoords(this.castlingRook.after.x, this.castlingRook.after.y);
+            this.castlingRook.piece.setHasMoved(true);
+
+            this.castlingRook = null;
+        }
     }
 
     /**
