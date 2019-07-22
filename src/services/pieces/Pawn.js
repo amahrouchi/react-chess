@@ -39,16 +39,19 @@ class Pawn extends AbstractPiece {
                     return !this.hasMoved
                         && !this.chessBoard.hasPiece(to.x, to.y);
 
-                // Take an opponent piece
-                case 'take':
-                case 'take2':
-                    const targetPiece = this.chessBoard.getPiece(to.x, to.y);
-                    return targetPiece !== null
-                        && this.color !== targetPiece[0];
-
                 // Take opponent pawn "en passant"
                 case 'en_passant':
                 case 'en_passant2':
+
+                    // TODO Bug: on peut prendre en passant meme si ce n'est pas le premier move du pion adverse
+
+                    if (
+                        (this.color === pieceConfig.WHITE && from.y !== 3)
+                        || (this.color === pieceConfig.BLACK && from.y !== 4)
+                    ) {
+                        continue; // continue here to check the "take" moves too
+                    }
+
                     const increment       = this.color === pieceConfig.WHITE ? 1 : -1;
                     const opponentPawn    = this.chessBoard.getPiece(to.x, to.y + increment);
                     const hasOpponentPawn = opponentPawn !== null
@@ -60,7 +63,14 @@ class Pawn extends AbstractPiece {
                         return true;
                     }
 
-                    break;
+                    continue; // continue here to check the "take" moves too
+
+                // Take an opponent piece
+                case 'take':
+                case 'take2':
+                    const targetPiece = this.chessBoard.getPiece(to.x, to.y);
+                    return targetPiece !== null
+                        && this.color !== targetPiece.getColor();
 
                 // Unknown move...
                 default:

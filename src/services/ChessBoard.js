@@ -290,7 +290,7 @@ class ChessBoard {
                             }
 
                             // Move the piece and check if the king is still in check
-                            let chessBoardClone = cloneDeep(this);
+                            const chessBoardClone = cloneDeep(this);
                             chessBoardClone.selectCoords(pieceX, pieceY);
                             chessBoardClone.moveSelectedTo(moveX, moveY);
 
