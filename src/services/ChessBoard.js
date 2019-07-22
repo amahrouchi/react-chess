@@ -279,8 +279,10 @@ class ChessBoard {
                     // Check all current piece moves
                     for (let moveY = 0; moveY < mainConfig.BOARD_SIZE; moveY++) {
                         for (let moveX = 0; moveX < mainConfig.BOARD_SIZE; moveX++) {
+                            const chessBoardClone = cloneDeep(this);
+                            const clonePiece      = chessBoardClone.getPiece(pieceX, pieceY);
 
-                            const canMove = piece.canMove(
+                            const canMove = clonePiece.canMove(
                                 {x : pieceX, y : pieceY},
                                 {x : moveX, y : moveY}
                             );
@@ -290,7 +292,6 @@ class ChessBoard {
                             }
 
                             // Move the piece and check if the king is still in check
-                            const chessBoardClone = cloneDeep(this);
                             chessBoardClone.selectCoords(pieceX, pieceY);
                             chessBoardClone.moveSelectedTo(moveX, moveY);
 
