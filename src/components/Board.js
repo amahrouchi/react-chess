@@ -27,33 +27,47 @@ class Board extends React.Component {
      * @return {*}
      */
     render() {
+
+        let message, checkMessage;
+
         const isWhite     = this.state.chessBoard.getPlayer() === pieceConfig.WHITE;
-        let whoPlays      = isWhite ? 'White to play' : 'Black to play';
         let whoPlaysClass = 'who-plays ';
         whoPlaysClass += isWhite ? 'white' : 'black';
 
-        const inCheck = this.state.chessBoard.kingInCheck();
-        let check     = inCheck
-                        ? <span className="check">(check!)</span>
-                        : '';
-        // Check the mate
-        if (this.state.chessBoard.kingIsMate(inCheck)) {
-            // Game over
-            const winner = isWhite ? 'Black' : 'White';
-            whoPlays     = '';
-            check        = (
-                <span className="check">
-                    Check mate! <br/>
-                    {winner} wins!
-                </span>
-            );
+
+        if (this.state.chessBoard.getCanPromote()) {
+
+            // TODO
+            message      = 'Promote to:';
+            checkMessage = '';
+
+        } else {
+
+            // TODO: Put this in a method
+            const inCheck = this.state.chessBoard.kingInCheck();
+            checkMessage  = inCheck
+                            ? <span className="check">(check!)</span>
+                            : '';
+            // Check the mate
+            message       = isWhite ? 'White to play' : 'Black to play';
+            if (this.state.chessBoard.kingIsMate(inCheck)) {
+                // Game over
+                const winner = isWhite ? 'Black' : 'White';
+                message      = '';
+                checkMessage = (
+                    <span className="check">
+                        Check mate! <br/>
+                        {winner} wins!
+                    </span>
+                );
+            }
         }
 
         return (
             <div className="board">
                 {this.buildBoard()}
                 <div className={whoPlaysClass}>
-                    {whoPlays} {check}
+                    {message} {checkMessage}
                 </div>
             </div>
         );
@@ -103,6 +117,10 @@ class Board extends React.Component {
      * @return {void}
      */
     clickSquare(x, y) {
+        if (this.state.chessBoard.getCanPromote()) {
+            return;
+        }
+
         const chessBoard = cloneDeep(this.state.chessBoard);
 
         // Select a piece to move
@@ -158,8 +176,41 @@ class Board extends React.Component {
 
             selectedPiece.afterMove();
 
+            let changePlayer = true;
+            if (chessBoard.isPromotion()) {
+                // alert('promote!');
+                // chessBoard.getMatrix()[y][x] = new Queen(
+                //     chessBoard,
+                //     pieceConfig.QUEEN,
+                //     chessBoard.getPlayer(),
+                //     {x : x, y : y}
+                // );
+
+
+                /*
+                 * TODO
+                 * Metre a jour le flag canPromote (true)
+                 * Ne pas changer de joueur
+                 * setState()
+                 *
+                 * Empecher de jouer en etat de promotion
+                 * Proposer la promotion : Q, R, N, B
+                 * Selectionner : Q, R, N, B
+                 * Mettre à jour ma matrice
+                 * Mettre à jour la lastPieceMoved sur la piece promue
+                 * Metre a jour le flag canPromote (false)
+                 * Changer de joueur
+                 * setState()
+                 */
+                chessBoard.setCanPromote(true);
+                changePlayer = false;
+            }
+
             chessBoard.unselectCoords();
-            chessBoard.changePlayer();
+            if (changePlayer) {
+                chessBoard.changePlayer();
+            }
+
             this.setState({chessBoard : chessBoard});
         }
     }

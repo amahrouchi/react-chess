@@ -14,12 +14,14 @@ class ChessBoard {
      * @param {object} selectedCoords {x : <value>, y : <value>}
      * @param {string} player Current player ('w' or 'b')
      * @param {AbstractPiece} lastPieceMoved
+     * @param canPromote
      */
     constructor(
         matrix         = null,
         selectedCoords = null,
         player         = pieceConfig.WHITE,
-        lastPieceMoved = null
+        lastPieceMoved = null,
+        canPromote     = false
     ) {
         // Init matrix
         if (matrix !== null) {
@@ -36,6 +38,9 @@ class ChessBoard {
 
         // Inits the last piece moved
         this.lastPieceMoved = lastPieceMoved;
+
+        // Set the promotion state
+        this.canPromote = canPromote;
     }
 
     /**
@@ -44,22 +49,6 @@ class ChessBoard {
      */
     getMatrix() {
         return this.matrix;
-    }
-
-    /**
-     * Gets the matrix copy
-     * @return {Array}
-     */
-    getMatrixCopy() {
-
-        const matrix = [[], [], [], [], [], [], [], []];
-        for (let y = 0; y < mainConfig.BOARD_SIZE; y++) {
-            for (let x = 0; x < mainConfig.BOARD_SIZE; x++) {
-                matrix[y][x] = this.matrix[y][x];
-            }
-        }
-
-        return matrix;
     }
 
     /**
@@ -200,6 +189,23 @@ class ChessBoard {
     }
 
     /**
+     * Returns the promotion state
+     * @return {boolean}
+     */
+    getCanPromote() {
+        return this.canPromote;
+    }
+
+    /**
+     * Sets the promotion state
+     * @param {boolean} canPromote
+     * @return {void}
+     */
+    setCanPromote(canPromote) {
+        this.canPromote = canPromote
+    }
+
+    /**
      * Whether the current piece is attacked
      * @return {boolean}
      */
@@ -315,7 +321,7 @@ class ChessBoard {
      */
     isPromotion() {
         const piece = this.lastPieceMoved;
-        const y = piece.getCoords().y;
+        const y     = piece.getCoords().y;
 
         if (
             piece.getType() !== pieceConfig.PAWN
