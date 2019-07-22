@@ -12,7 +12,7 @@ class AbstractPiece {
      */
     constructor(chessBoard, type, color, coords) {
         this.chessBoard = chessBoard;
-        this.type       = type;
+        this.type       = type; // TODO: this parameter is useless, it can be set (hard coded) in child constructors
         this.color      = color;
         this.coords     = coords;
         this.hasMoved   = false;

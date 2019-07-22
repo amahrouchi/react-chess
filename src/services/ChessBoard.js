@@ -308,6 +308,26 @@ class ChessBoard {
         // All available moves cannot prevent the current check, so it is mate
         return true;
     }
+
+    /**
+     * Check if the last piece moves is a pawn and if it can be promoted
+     * @return {boolean}
+     */
+    isPromotion() {
+        const piece = this.lastPieceMoved;
+        const y = piece.getCoords().y;
+
+        if (
+            piece.getType() !== pieceConfig.PAWN
+            || piece.getColor() !== this.getPlayer()
+        ) {
+            return false;
+        }
+
+        return (y === 0 && this.getPlayer() === pieceConfig.WHITE)
+            || (y === 7 && this.getPlayer() === pieceConfig.BLACK);
+    }
+
 }
 
 export default ChessBoard;
