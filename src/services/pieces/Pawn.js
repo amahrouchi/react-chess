@@ -56,8 +56,6 @@ class Pawn extends AbstractPiece {
                 case 'en_passant':
                 case 'en_passant2':
 
-                    // TODO Bug: on peut prendre en passant meme si ce n'est pas le premier move du pion adverse
-
                     if (
                         (this.color === pieceConfig.WHITE && from.y !== 3)
                         || (this.color === pieceConfig.BLACK && from.y !== 4)
