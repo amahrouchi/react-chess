@@ -1,4 +1,5 @@
-import React from "react";
+import React       from "react";
+import pieceConfig from "../config/piece";
 
 /**
  * The promotion component
@@ -10,8 +11,9 @@ class Promotion extends React.Component {
      * @return {*}
      */
     render() {
+        const isWhite = this.props.chessBoard.getPlayer() === pieceConfig.WHITE;
         let className = "who-plays ";
-        className += this.props.isWhite ? 'white' : 'black';
+        className += isWhite ? 'white' : 'black';
 
         return (
             <div className={className}>Promote to:</div>

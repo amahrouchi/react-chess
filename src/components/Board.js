@@ -30,13 +30,11 @@ class Board extends React.Component {
      */
     render() {
 
-        const isWhite = this.state.chessBoard.getPlayer() === pieceConfig.WHITE;
-
         let boardInfo;
         if (this.state.chessBoard.getCanPromote()) {
 
             boardInfo = (
-                <Promotion isWhite={isWhite}
+                <Promotion chessBoard={this.state.chessBoard}
                            onPromotionClick={this.clickPromotion.bind(this)}
                 />
             );
@@ -44,8 +42,7 @@ class Board extends React.Component {
         } else {
 
             boardInfo = (
-                <BoardInfo chessBoard={this.state.chessBoard}
-                           isWhite={isWhite}/>
+                <BoardInfo chessBoard={this.state.chessBoard}/>
             );
 
         }
