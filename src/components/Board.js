@@ -1,6 +1,7 @@
 import React       from 'react';
 import {cloneDeep} from 'lodash';
 import Square      from './Square';
+import BoardInfo   from './BoardInfo';
 import Promotion   from './Promotion';
 import ChessBoard  from '../services/ChessBoard';
 import mainConfig  from '../config/main';
@@ -29,12 +30,7 @@ class Board extends React.Component {
      */
     render() {
 
-        let message, checkMessage;
-
-        const isWhite     = this.state.chessBoard.getPlayer() === pieceConfig.WHITE;
-        let whoPlaysClass = 'who-plays ';
-        whoPlaysClass += isWhite ? 'white' : 'black';
-
+        const isWhite = this.state.chessBoard.getPlayer() === pieceConfig.WHITE;
 
         let boardInfo;
         if (this.state.chessBoard.getCanPromote()) {
@@ -47,30 +43,11 @@ class Board extends React.Component {
 
         } else {
 
-            // TODO: Put this in a component
-            const inCheck = this.state.chessBoard.kingInCheck();
-            checkMessage  = inCheck
-                            ? <span className="check">(check!)</span>
-                            : '';
-            // Check the mate
-            message       = isWhite ? 'White to play' : 'Black to play';
-            if (this.state.chessBoard.kingIsMate(inCheck)) {
-                // Game over
-                const winner = isWhite ? 'Black' : 'White';
-                message      = '';
-                checkMessage = (
-                    <span className="check">
-                        Check mate! <br/>
-                        {winner} wins!
-                    </span>
-                );
-            }
-
             boardInfo = (
-                <div className={whoPlaysClass}>
-                    {message} {checkMessage}
-                </div>
+                <BoardInfo chessBoard={this.state.chessBoard}
+                           isWhite={isWhite}/>
             );
+
         }
 
         return (
