@@ -189,6 +189,15 @@ class ChessBoard {
     }
 
     /**
+     * Sets the last piece moved
+     * @param {AbstractPiece} piece
+     * @return {void}
+     */
+    setLastPieceMoved(piece) {
+        this.lastPieceMoved = piece;
+    }
+
+    /**
      * Returns the promotion state
      * @return {boolean}
      */

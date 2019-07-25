@@ -1,11 +1,11 @@
-import React       from 'react';
-import {cloneDeep} from 'lodash';
-import Square      from './Square';
-import BoardInfo   from './BoardInfo';
-import Promotion   from './Promotion';
-import ChessBoard  from '../services/ChessBoard';
-import mainConfig  from '../config/main';
-import pieceConfig from '../config/piece';
+import React        from 'react';
+import {cloneDeep}  from 'lodash';
+import Square       from './Square';
+import BoardInfo    from './BoardInfo';
+import Promotion    from './Promotion';
+import ChessBoard   from '../services/ChessBoard';
+import mainConfig   from '../config/main';
+import PieceFactory from "../services/pieces/PieceFactory";
 
 /**
  * The chess board component
@@ -158,23 +158,9 @@ class Board extends React.Component {
 
             selectedPiece.afterMove();
 
+            // Pawn promotion
             let changePlayer = true;
             if (chessBoard.isPromotion()) {
-                /*
-                 * TODO
-                 * Metre a jour le flag canPromote (true)
-                 * Ne pas changer de joueur
-                 * setState()
-                 *
-                 * Empecher de jouer en etat de promotion
-                 * Proposer la promotion : Q, R, N, B
-                 * Selectionner : Q, R, N, B
-                 * Mettre à jour ma matrice
-                 * Mettre à jour la lastPieceMoved sur la piece promue
-                 * Metre a jour le flag canPromote (false)
-                 * Changer de joueur
-                 * setState()
-                 */
                 chessBoard.setCanPromote(true);
                 changePlayer = false;
             }
@@ -194,7 +180,24 @@ class Board extends React.Component {
      * @return {void}
      */
     clickPromotion(pieceType) {
-        alert(pieceType);
+
+        const chessBoard = cloneDeep(this.state.chessBoard);
+        const coords     = chessBoard.getLastPieceMoved().getCoords();
+
+        // Create the new piece
+        const piece = PieceFactory.create(
+            chessBoard.getPlayer() + pieceType,
+            coords,
+            chessBoard
+        );
+
+        chessBoard.getMatrix()[coords.y][coords.x] = piece;
+        chessBoard.setLastPieceMoved(piece);
+        chessBoard.setCanPromote(false);
+        chessBoard.unselectCoords();
+        chessBoard.changePlayer();
+
+        this.setState({chessBoard : chessBoard});
     }
 
 }
