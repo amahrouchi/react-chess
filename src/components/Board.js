@@ -160,15 +160,6 @@ class Board extends React.Component {
 
             let changePlayer = true;
             if (chessBoard.isPromotion()) {
-                // alert('promote!');
-                // chessBoard.getMatrix()[y][x] = new Queen(
-                //     chessBoard,
-                //     pieceConfig.QUEEN,
-                //     chessBoard.getPlayer(),
-                //     {x : x, y : y}
-                // );
-
-
                 /*
                  * TODO
                  * Metre a jour le flag canPromote (true)
@@ -199,10 +190,11 @@ class Board extends React.Component {
 
     /**
      * Click on the promotion piece
+     * @param {string} pieceType
      * @return {void}
      */
-    clickPromotion() {
-        alert('Select a piece');
+    clickPromotion(pieceType) {
+        alert(pieceType);
     }
 
 }

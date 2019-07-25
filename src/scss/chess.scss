@@ -64,6 +64,33 @@ body {
             .check {
                 color : #bd1100;
             }
+
+            .promotion-pieces {
+                display         : flex;
+                justify-content : center;
+                margin-top      : 10px;
+
+                .piece {
+                    cursor     : pointer;
+
+                    &:not(:first-child) {
+                        margin-left : 10px;
+                    }
+
+                    img {
+                        border-radius: 5px;
+                        transition : background-color 200ms;
+                    }
+
+                    &:hover {
+                        img {
+                            background-color : #87c17f;
+                        }
+                    }
+
+                }
+
+            }
         }
     }
 }
