@@ -83,8 +83,9 @@ class ChessBoard {
         const piece                                               = this.matrix[this.selectedCoords.y][this.selectedCoords.x];
         this.matrix[this.selectedCoords.y][this.selectedCoords.x] = null;
         this.matrix[y][x]                                         = piece;
-        piece.setHasMoved(true);
         piece.setCoords(x, y);
+        piece.setHasMoved(true);
+        piece.incrementNbMoves();
         this.lastPieceMoved = piece;
     }
 

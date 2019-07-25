@@ -16,6 +16,7 @@ class AbstractPiece {
         this.color      = color;
         this.coords     = coords;
         this.hasMoved   = false;
+        this.nbMoves    = 0;
     }
 
     /**
@@ -70,6 +71,22 @@ class AbstractPiece {
             x : x,
             y : y,
         };
+    }
+
+    /**
+     * Returns the number of moves played by a piece
+     * @return {int}
+     */
+    getNbMoves() {
+        return this.nbMoves;
+    }
+
+    /**
+     * Increment the number of moves played by a piece
+     * @return {void}
+     */
+    incrementNbMoves() {
+        this.nbMoves++;
     }
 
     /**

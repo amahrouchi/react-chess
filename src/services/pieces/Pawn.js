@@ -65,13 +65,14 @@ class Pawn extends AbstractPiece {
                         continue; // continue here to check the "take" moves too
                     }
 
-                    const increment       = this.color === pieceConfig.WHITE ? 1 : -1;
-                    const opponentPawn    = this.chessBoard.getPiece(to.x, to.y + increment);
-                    const hasOpponentPawn = opponentPawn !== null
+                    const increment        = this.color === pieceConfig.WHITE ? 1 : -1;
+                    const opponentPawn     = this.chessBoard.getPiece(to.x, to.y + increment);
+                    const canTakeEnPassant = opponentPawn !== null
                         && opponentPawn.type === pieceConfig.PAWN
-                        && this.chessBoard.getLastPieceMoved() === opponentPawn;
+                        && this.chessBoard.getLastPieceMoved() === opponentPawn
+                        && opponentPawn.getNbMoves() === 1;
 
-                    if (hasOpponentPawn) {
+                    if (canTakeEnPassant) {
                         this.pieceToRemoveAfter = {
                             x : to.x,
                             y : to.y + increment

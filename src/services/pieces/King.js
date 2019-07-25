@@ -145,6 +145,7 @@ class King extends AbstractPiece {
 
             this.castlingRook.piece.setCoords(this.castlingRook.after.x, this.castlingRook.after.y);
             this.castlingRook.piece.setHasMoved(true);
+            this.castlingRook.piece.incrementNbMoves();
 
             this.castlingRook = null;
         }
