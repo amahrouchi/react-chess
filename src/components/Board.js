@@ -1,6 +1,7 @@
 import React       from 'react';
 import {cloneDeep} from 'lodash';
 import Square      from './Square';
+import Promotion   from './Promotion';
 import ChessBoard  from '../services/ChessBoard';
 import mainConfig  from '../config/main';
 import pieceConfig from '../config/piece';
@@ -35,15 +36,18 @@ class Board extends React.Component {
         whoPlaysClass += isWhite ? 'white' : 'black';
 
 
+        let boardInfo;
         if (this.state.chessBoard.getCanPromote()) {
 
-            // TODO
-            message      = 'Promote to:';
-            checkMessage = '';
+            boardInfo = (
+                <Promotion isWhite={isWhite}
+                           onPromotionClick={this.clickPromotion.bind(this)}
+                />
+            );
 
         } else {
 
-            // TODO: Put this in a method
+            // TODO: Put this in a component
             const inCheck = this.state.chessBoard.kingInCheck();
             checkMessage  = inCheck
                             ? <span className="check">(check!)</span>
@@ -61,14 +65,18 @@ class Board extends React.Component {
                     </span>
                 );
             }
+
+            boardInfo = (
+                <div className={whoPlaysClass}>
+                    {message} {checkMessage}
+                </div>
+            );
         }
 
         return (
             <div className="board">
                 {this.buildBoard()}
-                <div className={whoPlaysClass}>
-                    {message} {checkMessage}
-                </div>
+                {boardInfo}
             </div>
         );
     }
@@ -213,6 +221,14 @@ class Board extends React.Component {
 
             this.setState({chessBoard : chessBoard});
         }
+    }
+
+    /**
+     * Click on the promotion piece
+     * @return {void}
+     */
+    clickPromotion() {
+        alert('Select a piece');
     }
 
 }
