@@ -6,6 +6,7 @@ import Promotion    from './Promotion';
 import ChessBoard   from '../services/ChessBoard';
 import mainConfig   from '../config/main';
 import PieceFactory from "../services/pieces/PieceFactory";
+import pieceConfig  from "../config/piece";
 
 /**
  * The chess board component
@@ -32,24 +33,26 @@ class Board extends React.Component {
 
         let boardInfo;
         if (this.state.chessBoard.getCanPromote()) {
-
             boardInfo = (
                 <Promotion chessBoard={this.state.chessBoard}
                            onPromotionClick={this.clickPromotion.bind(this)}
                 />
             );
-
         } else {
-
             boardInfo = (
                 <BoardInfo chessBoard={this.state.chessBoard}/>
             );
-
         }
+
+        // Change the board orientation
+        let lineContainerClass = 'line-container ';
+        lineContainerClass += this.state.chessBoard.getPlayer() === pieceConfig.BLACK ? 'black' : '';
 
         return (
             <div className="board">
-                {this.buildBoard()}
+                <div className={lineContainerClass}>
+                    {this.buildBoard()}
+                </div>
                 {boardInfo}
             </div>
         );
