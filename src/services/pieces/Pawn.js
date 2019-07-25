@@ -49,7 +49,7 @@ class Pawn extends AbstractPiece {
 
                 // Move 2 squares forward
                 case 'forward2':
-                    return !this.hasMoved
+                    return !this.hasMoved()
                         && !this.chessBoard.hasPiece(to.x, to.y);
 
                 // Take opponent pawn "en passant"

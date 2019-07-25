@@ -54,7 +54,7 @@ class King extends AbstractPiece {
                         case 'castle1':
                         case 'castle2':
                             // Check if the king has already moved
-                            if (this.hasMoved) {
+                            if (this.hasMoved()) {
                                 return false;
                             }
 
@@ -99,7 +99,7 @@ class King extends AbstractPiece {
                             }
 
                             // Check if the rook has moved
-                            const rookHasMoved = rook.getHasMoved();
+                            const rookHasMoved = rook.hasMoved();
                             if (!rookHasMoved) {
                                 // Store the castling rook data
                                 this.castlingRook = {
@@ -144,7 +144,6 @@ class King extends AbstractPiece {
             matrix[this.castlingRook.after.y][this.castlingRook.after.x]                         = this.castlingRook.piece;
 
             this.castlingRook.piece.setCoords(this.castlingRook.after.x, this.castlingRook.after.y);
-            this.castlingRook.piece.setHasMoved(true);
             this.castlingRook.piece.incrementNbMoves();
 
             this.castlingRook = null;

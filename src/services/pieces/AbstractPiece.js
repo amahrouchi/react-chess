@@ -15,7 +15,6 @@ class AbstractPiece {
         this.type       = type; // TODO: this parameter is useless, it can be set (hard coded) in child constructors
         this.color      = color;
         this.coords     = coords;
-        this.hasMoved   = false;
         this.nbMoves    = 0;
     }
 
@@ -42,15 +41,6 @@ class AbstractPiece {
      */
     getType() {
         return this.type;
-    }
-
-    /**
-     * Sets whether the piece has moved
-     * @param {boolean} hasMoved
-     * @return {void}
-     */
-    setHasMoved(hasMoved) {
-        this.hasMoved = hasMoved;
     }
 
     /**
@@ -93,8 +83,8 @@ class AbstractPiece {
      * Whether the piece has moved
      * @return {boolean}
      */
-    getHasMoved() {
-        return this.hasMoved;
+    hasMoved() {
+        return this.nbMoves > 0;
     }
 
     /**

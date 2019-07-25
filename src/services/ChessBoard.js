@@ -84,7 +84,6 @@ class ChessBoard {
         this.matrix[this.selectedCoords.y][this.selectedCoords.x] = null;
         this.matrix[y][x]                                         = piece;
         piece.setCoords(x, y);
-        piece.setHasMoved(true);
         piece.incrementNbMoves();
         this.lastPieceMoved = piece;
     }
