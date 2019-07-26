@@ -17,6 +17,20 @@ body {
 
     .board {
 
+        .rotation-selection {
+            text-align    : center;
+            margin-bottom : 20px;
+
+            label {
+                display         : flex;
+                justify-content : center;
+
+                input[type=checkbox] {
+                    margin-right : 8px;
+                }
+            }
+        }
+
         .line-container {
             transition : transform 100ms;
 

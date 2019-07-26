@@ -46,10 +46,18 @@ class Board extends React.Component {
 
         // Change the board orientation
         let lineContainerClass = 'line-container ';
-        lineContainerClass += this.state.chessBoard.getPlayer() === pieceConfig.BLACK ? 'black' : '';
+        if (this.state.chessBoard.getCanRotate()) {
+            lineContainerClass += this.state.chessBoard.getPlayer() === pieceConfig.BLACK ? 'black' : '';
+        }
 
         return (
             <div className="board">
+                <div className="rotation-selection">
+                    <label>
+                        <input type="checkbox" onClick={this.rotationSelection.bind(this)} />
+                        <span>Rotate the chessboard for Black</span>
+                    </label>
+                </div>
                 <div className={lineContainerClass}>
                     {this.buildBoard()}
                 </div>
@@ -203,6 +211,16 @@ class Board extends React.Component {
         this.setState({chessBoard : chessBoard});
     }
 
+    /**
+     * Select whether the board should rotate between moves
+     * @param {Event} e
+     * @return {void}
+     */
+    rotationSelection(e) {
+        const chessBoard = cloneDeep(this.state.chessBoard);
+        chessBoard.setCanRotate(e.currentTarget.checked);
+        this.setState({chessBoard : chessBoard});
+    }
 }
 
 export default Board;

@@ -41,6 +41,9 @@ class ChessBoard {
 
         // Set the promotion state
         this.canPromote = canPromote;
+
+        // Whether the chess board rotates between moves
+        this.canRotate = false
     }
 
     /**
@@ -212,6 +215,23 @@ class ChessBoard {
      */
     setCanPromote(canPromote) {
         this.canPromote = canPromote
+    }
+
+    /**
+     * Whether the chessboard rotates between moves
+     * @return {boolean}
+     */
+    getCanRotate() {
+        return this.canRotate;
+    }
+
+    /**
+     * Returns whether the chessboard rotates between moves
+     * @param {boolean} canRotate
+     * @return {void}
+     */
+    setCanRotate(canRotate) {
+        this.canRotate = canRotate;
     }
 
     /**
