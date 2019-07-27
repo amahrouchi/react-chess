@@ -1,11 +1,10 @@
-import React from "react";
+import React      from "react";
 import mainConfig from "../config/main";
 
 /**
  * Piece component
  */
-class Piece extends React.Component
-{
+class Piece extends React.Component {
     /**
      * Renders the component
      * @return {*}
@@ -15,6 +14,8 @@ class Piece extends React.Component
             <img src={this.getPath()}
                  alt="A piece"
                  className="piece"
+                 draggable
+                 onDrag={(e) => this.props.onDrag(e, this.props.object.getCoords().x, this.props.object.getCoords().y)}
             />
         );
     }

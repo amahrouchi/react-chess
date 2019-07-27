@@ -54,7 +54,7 @@ class Board extends React.Component {
             <div className="board">
                 <div className="rotation-selection">
                     <label>
-                        <input type="checkbox" onClick={this.rotationSelection.bind(this)} />
+                        <input type="checkbox" onClick={this.rotationSelection.bind(this)}/>
                         <span>Rotate the chessboard for Black</span>
                     </label>
                 </div>
@@ -109,7 +109,9 @@ class Board extends React.Component {
      * @param {int} y
      * @return {void}
      */
-    clickSquare(x, y) {
+    clickSquare(e, x, y) {
+        console.log(e.type, x, y);
+
         if (this.state.chessBoard.getCanPromote()) {
             return;
         }
